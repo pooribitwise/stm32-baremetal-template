@@ -36,11 +36,14 @@ git clone https://github.com/pooribitwise/stm32.git
 make
 ```
 4. Load main.bin on your chips flash (these commands are for stm32f1 series)
-    * OpenOCD:
+* OpenOCD:
+
 ```bash
 openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program main.bin verify reset exit 0x08000000"
 ```
-    * st-flash:
+
+* st-flash:
+
 ```bash
 st-flash write main.bin 0x08000000
 ```
