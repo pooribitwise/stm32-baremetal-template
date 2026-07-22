@@ -17,13 +17,10 @@ void Reset_Handler(void) {
 
 	// copy vars from flash data section to ram
 	src = &_sidata;
-	dest = &_sdata;
-	while (dest < &_edata)
-		*dest++ = *src++;
+	for (dest = &_sdata; dest < &_edata; *dest++ = *src++);
 
 	// set bss to zero in ram
-	while (dest < &_sbss)
-		*dest++ = 0;
+	for (dest = &_sbss; dest < &_ebss; *dest++ =0);
 
 	// jmp to main
 	main();

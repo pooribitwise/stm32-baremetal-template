@@ -2,26 +2,32 @@
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 
-INCDIRS=-I. ./inc
+TARGET=main
+
+SRCDIRS = . src
+INCDIR = inc
+
+INCDIRS=-I. -I./$(INCDIR)
 OPT=-Os
+
 CFLAGS=-mthumb -mcpu=cortex-m3 -DSTM32F103x6 -Wall -Wextra $(INCDIRS) $(OPT)
 
-OBJECTS=main.o startup.o
-CFILES=main.c startup.c
+CFILES=$(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c))
+OBJECTS=$(CFILES:.c=.o)
 
-ELF=blink.elf
-BINARY=blink.bin
+ELF=$(TARGET).elf
+BINARY=$(TARGET).bin
 
 all: $(BINARY)
 
 $(BINARY): $(ELF)
-	$(OBJCOPY) -O binary $^ $@
+	$(OBJCOPY) -O binary $< $@
 
 $(ELF): $(OBJECTS)
 	$(CC) -nostdlib -T linker.ld -o $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $^
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(BINARY) $(ELF) $(OBJECTS)
