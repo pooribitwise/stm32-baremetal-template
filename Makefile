@@ -31,3 +31,9 @@ $(ELF): $(OBJECTS)
 
 clean:
 	rm -f $(BINARY) $(ELF) $(OBJECTS)
+
+flash:
+	st-flash write $(BINARY) 0x08000000
+
+erase:
+	st-flash erase

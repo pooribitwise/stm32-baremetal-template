@@ -48,6 +48,22 @@ openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program main.bin veri
 st-flash write main.bin 0x08000000
 ```
 
+### BONUS:
+You can also use:
+
+```bash
+make flash
+```
+to flash your bin file on the chip and
+
+```bash
+make erase
+```
+
+to erase the flash memory.
+
+**NOTE:** These make commands work only using st-link programmers.
+
 ---
 
 ## Additional Notes
